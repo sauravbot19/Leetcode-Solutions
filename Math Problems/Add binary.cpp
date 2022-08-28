@@ -1,55 +1,30 @@
-// add binary leetcode solution
+// Add Binary Leetcode solution
 // c++
 
 class Solution {
 public:
     string addBinary(string a, string b) {
-        
+     
+        string res;
+        int i = a.length() - 1;
+        int j = b.length() - 1;
         int carry = 0;
-        string res = "";
         
-        reverse(a.begin(), a.end());
-        reverse(b.begin(), b.end());
-        
-        int i = 0;
-        int sum;
-        
-        while(i < a.size() || i < b.size()) {
-            sum = carry;
+        while(i < a.length() || j < b.length()) {
+            int sum = carry;
+            if(i < a.length())
+                sum += a[i] - '0';
+                i--;
+            if(j < b.length())
+                sum += b[j] - '0';
+                j--;
             
-            if(i < a.size()) {
-                sum = sum + a[i] - '0'; 
-            }
-            if(i < b.size()) {
-                sum = sum + b[i] - '0'; 
-            }
-            
-            if(sum == 0) {
-                carry = 0;
-                res = res + '0';
-            }
-            else if(sum == 1) {
-                carry = 0;
-                res = res + '1';
-            }
-            else if (sum == 2) {
-                carry = 1;
-                res = res + '0';
-            }
-            else {
-                carry = 1;
-                res = res + '1'; 
-            }
-            
-            i++;
+            carry = sum > 1 ? 1 : 0;
+            res += to_string(sum%2);
         }
-        
-        if (carry == 1) {
-            res = res + '1'; 
-        }
-        
+        if(carry) res += to_string(carry);
         reverse(res.begin(), res.end());
-        return res;
         
+        return res;
     }
 };
